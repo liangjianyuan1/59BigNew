@@ -68,6 +68,42 @@
             </form>
         </div>
     </div>
+
+    <script src="./libs/http.js"></script>
+
+    <script>
+        //入口函数
+        $(function(){
+            /* 1.页面一加载：ajax请求用户详细信息 */
+            $.ajax({
+                url:BigNew.user_detail,
+                type:'get',
+                dataType:'json',
+                success: function(backData){
+                    // console.log(backData);
+                    //服务器响应之后渲染数据
+                    $('.user_pic').attr('src',backData.data.userPic);
+
+                    // $('.username').val(backData.data.username);
+                    // $('.nickname').val(backData.data.nickname);
+                    // $('.email').val(backData.data.email);
+                    // $('.password').val(backData.data.password);
+
+                    /* 遍历对象快速赋值 */
+                    for(let key in backData.data){
+                        console.log( key );//属性名字符串
+                        console.log( backData.data[key] );//属性值
+                        $('.' + key).val( backData.data[key] );
+                    };
+                    
+                }
+            });
+
+            /* 2.文件预览 */
+
+            /* 3.文件上传 */
+        })
+    </script>
 </body>
 
 </html>
