@@ -90,7 +90,7 @@
             <td>{{ v.slug }}</td>
             <td class="text-center">
                 <a data-id="{{ v.id }}" href="javascript:void(0);" data-toggle="modal" data-target="#myModal" class=" btn btn-info btn-xs">编辑</a>
-                <a data-id="{{ v.id }}" href="javascript:void(0);" class="btn btn-danger btn-xs">删除</a>
+                <a data-id="{{ v.id }}" href="javascript:void(0);" class="btn btn-danger btn-xs btn-delete">删除</a>
             </td>
         </tr>
         {{ /each }}
@@ -140,8 +140,20 @@
                     //(1)修改模态框确认按钮为新增
                     $('.btn-confirm').text('新增');
                 } else {
-                    //(2)修改模态框确认按钮为编辑
+                    //编辑业务逻辑
+                    //(1)修改模态框确认按钮为编辑
                     $('.btn-confirm').text('编辑');
+                    //(2)传值：显示当前编辑的文章分类信息
+                    /* 
+                    this : 模态框
+                    e.relatedTarget : 当前点击的编辑按钮
+                    */
+                    $('#recipient-name').val( $(e.relatedTarget).parent().prev().prev().text() );
+                    $('#message-text').val( $(e.relatedTarget).parent().prev().text() );
+
+                    //(3)传值： 将当前点击的编辑按钮的data-id 传递给模态框的编辑按钮
+                   
+                    $('.btn-confirm').attr('data-id',  $(e.relatedTarget).attr('data-id') );
                 }
 
             });
@@ -177,16 +189,56 @@
                         }
                     });
                 }else{//编辑
-
+                    /* 3.编辑分类 */
+                    $.ajax({
+                        url:BigNew.category_edit,
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            id:$(this).attr('data-id'),
+                            name:$('#recipient-name').val(),
+                            slug:$('#message-text').val()
+                        },
+                        success: function(backData){
+                            console.log(backData);
+                            if(backData.code == 200){
+                                alert('修改成功');
+                                //刷新当前页面
+                                window.location.reload();
+                            }
+                            
+                        }
+                    });
                 }
             });
 
             
-
-
-            /* 3.编辑分类 */
-
-            /* 4.删除分类 */
+        
+            /* 4.删除分类
+            注意点：删除按钮是ajax动态增加，需要注册委托事件
+            */
+           $('table>tbody').on('click','.btn-delete',function(){
+                //(1)获取当前点击的按钮的data-id
+                let id = $(this).attr('data-id');
+                console.log(id);
+                //(2)ajax发送请求
+                $.ajax({
+                    url:BigNew.category_delete,
+                    type:'post',
+                    dataType:'json',
+                    data:{id:id},
+                    success: function(backData){
+                        console.log(backData);
+                        if( backData.code == 204 ){
+                            alert('删除成功');
+                            //刷新页面
+                            window.location.reload();
+                        }
+                        
+                    }
+                });
+                
+           });
         });
     </script>
 
