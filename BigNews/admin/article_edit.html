@@ -63,7 +63,8 @@
                         <!-- 日期插件 -->
                         <div class="jeinpbox">
                             <input type="text" class="jeinput" id="testico" placeholder="YYYY-MM-DD">
-                            <div class="icons jebtns" onclick="jeDate('#testico',{trigger:false,format: 'YYYY-MM-DD', zIndex:10001})">
+                            <div class="icons jebtns"
+                                onclick="jeDate('#testico',{trigger:false,format: 'YYYY-MM-DD', zIndex:10001})">
                             </div>
                         </div>
                     </div>
@@ -106,7 +107,7 @@
                 isinitVal: true,//显示默认时间
                 theme: { bgcolor: "#ffff00", color: "#ff0000", pnColor: "#ee2388" },
                 festival: true,//是否显示农历
-                zIndex:10001
+                zIndex: 10001
             });
 
             /* 注意点：发现问题  编辑器插件会遮盖日期插件
@@ -121,21 +122,42 @@
             /* 1.获取从文章列表页 传递过来的文章id */
             let id = window.location.href.split('=')[1];
             console.log(id);
-            
+
 
             /* 2.先加载所有的文章分类列表 */
             $.ajax({
-                url:BigNew.category_list,
-                type:'get',
-                dataType:'json',
-                success: function(backData){
+                url: BigNew.category_list,
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
                     console.log(backData);
                     //模板引擎渲染页面
-                    $('.category').html(template('cat_list',backData));
+                    $('.category').html(template('cat_list', backData));
+                    //先等文章分类加载完，再加载文章详情
+                    getArticleDetail();
                 }
             });
 
             /* 3.ajax请求文章详细信息 */
+            function getArticleDetail() {
+                $.ajax({
+                    url: BigNew.article_search,
+                    type: 'get',
+                    dataType: 'json',
+                    data: { id: id },
+                    success: function (backData) {
+                        console.log(backData);
+                        //渲染文章详细信息
+                        $('.title').val(backData.data.title);
+                        $('.article_cover').attr('src', backData.data.cover);
+                        $('.category').val(backData.data.categoryId);
+                        $('#testico').val(backData.data.date);
+                        //富文本编辑器设置需要用到自己的语法
+                        editor.txt.html(backData.data.content)
+
+                    }
+                });
+            }
 
             /* 4.文件预览 */
 
