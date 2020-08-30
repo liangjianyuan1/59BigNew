@@ -84,6 +84,14 @@
         </div>
     </div>
 
+    <!-- 模板一：文章分类模板 -->
+    <script id="cat_list" type="text/html">
+        {{ each data v }}
+        <option value="{{ v.id }}">{{ v.name }}</option>
+        {{ /each }}
+    </script>
+
+    <script src="./libs/http.js"></script>
     <script>
         //入口函数
         $(function () {
@@ -111,8 +119,21 @@
             editor.create();
 
             /* 1.获取从文章列表页 传递过来的文章id */
+            let id = window.location.href.split('=')[1];
+            console.log(id);
+            
 
             /* 2.先加载所有的文章分类列表 */
+            $.ajax({
+                url:BigNew.category_list,
+                type:'get',
+                dataType:'json',
+                success: function(backData){
+                    console.log(backData);
+                    //模板引擎渲染页面
+                    $('.category').html(template('cat_list',backData));
+                }
+            });
 
             /* 3.ajax请求文章详细信息 */
 
