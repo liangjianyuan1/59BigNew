@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 1.导包 -->
+    <script src="./echarts.js"></script>
+</head>
+
+<body>
+    <!-- 2.写HTML -->
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script>
+        /* 3.js初始化 */
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            title: {
+                text: '分类文章数量比',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)',
+               
+            },
+            legend: {
+                orient: 'horizontal',
+                data: ['爱生活', '爱代码', '爱保健', '爱美食', '爱电影'],
+                top:30
+            },
+            color: ['#22ffff', '#203040', '#ffff00', '#00ff00', '#ee2066'],
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    data: [
+                        { value: 335, name: '爱生活' },
+                        { value: 310, name: '爱代码' },
+                        { value: 234, name: '爱保健' },
+                        { value: 235, name: '爱美食' },
+                        { value: 348, name: '爱电影' }
+                    ]
+                }
+            ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

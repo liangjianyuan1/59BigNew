@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 1.导包 -->
+    <script src="./echarts.js"></script>
+</head>
+
+<body>
+    <!-- 2.写HTML -->
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script>
+        /* 3.js初始化 */
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '分类访问量',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                },
+
+            },
+
+            color: ['#22ffff', '#203040', '#ffff00', '#00ff00', '#ee2066'],
+            legend: {
+                data: ['爱生活', '爱代码', '爱保健', '爱美食', '爱电影'],
+                top: 30
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['一月', '二月', '三月', '四月']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '爱生活',
+                    type: 'bar',
+                    data: [320, 332, 301, 334]
+                },
+                {
+                    name: '爱代码',
+                    type: 'bar',
+                    data: [120, 132, 101, 134]
+                },
+                {
+                    name: '爱保健',
+                    type: 'bar',
+                    data: [220, 182, 191, 234]
+                },
+                {
+                    name: '爱美食',
+                    type: 'bar',
+                    data: [150, 232, 201, 154]
+                },
+                {
+                    name: '爱电影',
+                    type: 'bar',
+                    data: [362, 218, 364, 326],
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

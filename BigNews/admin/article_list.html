@@ -219,7 +219,17 @@
                 
             });
 
+            /* 4.点击右上角 发表文章 ： index.html侧边栏高亮 */
+            $('#release_btn').click(function(){
+                /* 
+                $('选择器',DOM树)  ： 在指定的DOM树中查找原因
 
+                $('选择器')  : 默认在当前页面的DOM数查找  (article_list.html)
+                $('选择器',window.parent.document)  : 在父页面的DOM树查找  (index.html)
+
+                 */
+                $('.level02>li:eq(1)',window.parent.document).click();
+            });
 
         });
     </script>
