@@ -97,81 +97,81 @@
             };
 
 
-            function loadChart() {
-                /* 3.js初始化 */
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('curve_show'));
+                function loadChart() {
+                    /* 3.js初始化 */
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('curve_show'));
 
-                var option = {
-                    tooltip: {
-                        trigger: 'axis',
-                        position: function (pt) {
-                            return [pt[0], '10%'];
-                        }
-                    },
-                    title: {
-                        left: 'center',
-                        text: '月新增文章数',
-                    },
-                    //右上角工具栏
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            dataZoom: {
-                                yAxisIndex: 'none'
-                            },
-                            dataView: { readOnly: false },
-                            magicType: { type: ['line', 'bar'] },
-                            restore: {},
-                            saveAsImage: {}
-                        }
-                    },
+                    var option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            position: function (pt) {
+                                return [pt[0], '10%'];
+                            }
+                        },
+                        title: {
+                            left: 'center',
+                            text: '月新增文章数',
+                        },
+                        //右上角工具栏
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: { readOnly: false },
+                                magicType: { type: ['line', 'bar'] },
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
 
-                    legend: {
-                        data: ['新增文章'],
-                        top: 30
-                    },
+                        legend: {
+                            data: ['新增文章'],
+                            top: 30
+                        },
 
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: date
-                    },
-                    yAxis: {
-                        type: 'value',
-                        boundaryGap: [0, '100%']
-                    },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: date
+                        },
+                        yAxis: {
+                            type: 'value',
+                            boundaryGap: [0, '100%']
+                        },
 
 
-                    series: [
-                        {
-                            name: '新增文章',
-                            type: 'line',
-                            smooth: true,
-                            symbol: 'emptyCircle',
-                            symbolSize: 8,
-                            sampling: 'average',
-                            //线条颜色
-                            itemStyle: {
-                                color: '#ff8100'
-                            },
-                            areaStyle: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: '#ffdfbc'
-                                }, {
-                                    offset: 1,
-                                    color: '#fff'
-                                }])
-                            },
-                            data: data
-                        }
-                    ]
-                };
+                        series: [
+                            {
+                                name: '新增文章',
+                                type: 'line',
+                                smooth: true,
+                                symbol: 'emptyCircle',
+                                symbolSize: 8,
+                                sampling: 'average',
+                                //线条颜色
+                                itemStyle: {
+                                    color: '#ff8100'
+                                },
+                                areaStyle: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: '#ffdfbc'
+                                    }, {
+                                        offset: 1,
+                                        color: '#fff'
+                                    }])
+                                },
+                                data: data
+                            }
+                        ]
+                    };
 
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
-            }
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }
         })();
     </script>
 
